@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Thryve Health & Wellness — Virtual Clinic for Women in Their 40s</title>
+<meta name="description" content="Cash-pay virtual hormone and wellness care for women in their 40s. Serving Arizona, New Mexico, and North Dakota.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --dk:#1e3d28;--mg:#2c5f3e;--ac:#1D9E75;
+  --lt:#5DCAA5;--pl:#9FE1CB;
+  --cm:#eef5ee;--cl:#f9fbf9;
+  --tm:#4a6a52;--mu:#7a9a82;
+  --bd:#c8e0c8;--wh:#ffffff;
+  --ease-out-expo: cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cl);color:var(--dk);font-weight:300;line-height:1.75;font-size:16px;overflow-x:hidden}
+
+/* ─── PAGE TRANSITION OVERLAY ─── */
+#page-veil{position:fixed;inset:0;background:var(--cl);z-index:9999;pointer-events:none;opacity:0;transition:opacity .35s ease}
+#page-veil.visible{opacity:1;pointer-events:all}
+
+/* ─── LOADING SCREEN ─── */
+#loader{display:none}
+
+/* ─── HEADER (NP CLINIC) ─── */
+.site-header{position:sticky;top:0;z-index:100;background:var(--wh);box-shadow:0 1px 0 var(--bd)}
+body.dark .site-header{background:#0e1f14;box-shadow:0 1px 0 #1e3d28}
+/* Top utility strip */
+.utility-bar{background:var(--dk);color:rgba(255,255,255,.85);padding:0 48px;height:34px;display:flex;align-items:center;justify-content:space-between;font-size:12px;letter-spacing:.3px}
+body.dark .utility-bar{background:#071009}
+.util-left{display:flex;align-items:center;gap:14px}
+.util-states{display:flex;align-items:center;gap:8px;font-weight:400}
+.util-states-dot{width:6px;height:6px;border-radius:50%;background:var(--lt);box-shadow:0 0 0 3px rgba(93,202,165,.18);flex-shrink:0;animation:pulseDot 2.4s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 0 3px rgba(93,202,165,.18)}50%{box-shadow:0 0 0 5px rgba(93,202,165,.28)}}
+.util-states b{color:var(--lt);font-weight:500;letter-spacing:.5px}
+.util-right{display:flex;align-items:center;gap:22px}
+.util-right a{color:rgba(255,255,255,.85);text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:color .2s}
+.util-right a:hover{color:var(--lt)}
+.util-right a svg{width:13px;height:13px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.6}
+.util-divider{width:1px;height:14px;background:rgba(255,255,255,.18)}
+/* Main nav */
+nav{background:var(--wh);padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:74px;transition:height .25s ease}
+body.dark nav{background:#0e1f14}
+.site-header.scrolled nav{height:62px;box-shadow:0 4px 18px rgba(30,61,40,.06)}
+.site-header.scrolled .utility-bar{height:0;overflow:hidden;padding:0 48px}
+.nav-logo{text-decoration:none;display:flex;align-items:center;gap:12px;flex-shrink:0;transition:transform .2s}
+.nav-logo:hover{transform:translateY(-1px)}
+.nav-logo img{height:54px;width:auto;transition:height .25s}
+.site-header.scrolled .nav-logo img{height:46px}
+.nav-logo-tag{font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:var(--ac);font-weight:500;padding-left:14px;border-left:1px solid var(--bd);line-height:1.4;max-width:160px}
+body.dark .nav-logo-tag{border-left-color:#1e3d28}
+/* Center links */
+.nav-links{display:flex;gap:38px;list-style:none;align-items:center}
+.nav-links a{font-size:14px;color:var(--dk);text-decoration:none;font-weight:400;transition:color .2s;position:relative;padding:8px 0;letter-spacing:.2px}
+body.dark .nav-links a{color:#d4e8da}
+.nav-links a::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:0;height:2px;background:var(--ac);border-radius:2px;transition:width .25s ease}
+.nav-links a:hover::after,.nav-links a.active::after{width:24px}
+.nav-links a:hover,.nav-links a.active{color:var(--ac)}
+.nav-links a.active{font-weight:500}
+/* Right side */
+.nav-right{display:flex;align-items:center;gap:16px;flex-shrink:0}
+/* Book CTA */
+.nav-cta{background:var(--ac);color:var(--wh);border:none;padding:11px 22px;border-radius:6px;font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-weight:500;transition:background .2s,box-shadow .2s,transform .15s;white-space:nowrap;box-shadow:0 2px 8px rgba(29,158,117,.22)}
+.nav-cta:hover{background:var(--mg);transform:translateY(-1px);box-shadow:0 4px 14px rgba(29,158,117,.32)}
+.nav-cta:active{transform:translateY(0)}
+.nav-cta svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8}
+/* Dark mode toggle */
+.dark-toggle{width:34px;height:18px;background:var(--bd);border-radius:9px;border:none;cursor:pointer;position:relative;transition:background .3s;flex-shrink:0}
+.dark-toggle::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--wh);transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+body.dark .dark-toggle{background:var(--mg)}
+body.dark .dark-toggle::after{transform:translateX(16px);background:var(--lt)}
+/* Hamburger for mobile */
+.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;flex-shrink:0;border-radius:6px;transition:background .2s}
+.nav-burger:hover{background:var(--cm)}
+.nav-burger span{display:block;width:22px;height:1.6px;background:var(--dk);border-radius:2px;transition:transform .3s,opacity .3s,background .3s}
+body.dark .nav-burger span{background:#d4e8da}
+/* Mobile drawer */
+.nav-drawer{position:fixed;inset:0;z-index:200;pointer-events:none}
+.nav-drawer-bg{position:absolute;inset:0;background:rgba(0,0,0,.4);opacity:0;transition:opacity .3s}
+.nav-drawer-panel{position:absolute;top:0;right:0;width:280px;height:100%;background:var(--wh);transform:translateX(100%);transition:transform .35s var(--ease-out-expo);padding:28px 32px;display:flex;flex-direction:column;gap:0}
+body.dark .nav-drawer-panel{background:#152b1d}
+.nav-drawer.open .nav-drawer-bg{opacity:1;pointer-events:all}
+.nav-drawer.open .nav-drawer-panel{transform:translateX(0);pointer-events:all}
+.drawer-close{align-self:flex-end;background:none;border:none;cursor:pointer;font-size:22px;color:var(--tm);padding:4px;margin-bottom:24px;line-height:1}
+body.dark .drawer-close{color:#7a9a82}
+.drawer-links{display:flex;flex-direction:column;gap:0}
+.drawer-links a{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--dk);text-decoration:none;padding:16px 0;border-bottom:1px solid var(--bd);font-weight:500;transition:color .2s}
+body.dark .drawer-links a{color:#d4e8da;border-color:#1e3d28}
+.drawer-links a:hover{color:var(--ac)}
+.drawer-cta{margin-top:28px;background:var(--ac);color:var(--wh);text-align:center;padding:14px 24px;border-radius:50px;text-decoration:none;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;transition:background .2s}
+.drawer-cta:hover{background:var(--mg)}
+
+/* ─── DARK MODE ─── */
+body.dark{background:#0e1f14;color:#d4e8da}
+body.dark .site-header.scrolled nav{background:rgba(14,31,20,0.98)}
+body.dark .trust-bar{background:#0e1f14;border-color:#1e3d28}
+body.dark .faq-item{background:#152b1d;border-color:#1e3d28}
+body.dark .faq-q:hover{background:#1a3322}
+body.dark .plan{background:#152b1d;border-color:#1e3d28}
+body.dark .plan.pop{background:#1a3322}
+body.dark .symp-card{background:#152b1d;border-color:#1e3d28}
+body.dark .step-detail{background:#152b1d}
+body.dark footer{background:#071009}
+body.dark .cta-sec{background:#071009}
+body.dark .about-prev{background:#0e1f14}
+
+/* ─── BUTTONS ─── */
+.btn-p,.btn-d,.btn-w{padding:16px 36px;border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block;font-weight:500;transition:background .25s,box-shadow .25s,transform .15s;position:relative;overflow:hidden}
+.btn-p{background:var(--ac);color:var(--wh)}
+.btn-p:hover{background:var(--mg);box-shadow:0 6px 20px rgba(29,158,117,.35);transform:translateY(-1px)}
+.btn-d{background:var(--mg);color:var(--wh)}
+.btn-d:hover{background:var(--dk);box-shadow:0 6px 20px rgba(44,95,62,.35);transform:translateY(-1px)}
+.btn-w{background:var(--wh);color:var(--dk);padding:16px 38px}
+.btn-w:hover{background:var(--cm);box-shadow:0 6px 20px rgba(0,0,0,.1);transform:translateY(-1px)}
+/* Ripple */
+.btn-ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);transform:scale(0);animation:ripple .5s ease-out forwards;pointer-events:none}
+@keyframes ripple{to{transform:scale(4);opacity:0}}
+
+/* ─── SHARED ─── */
+.lbl{font-size:13px;letter-spacing:3px;color:var(--ac);text-transform:uppercase;margin-bottom:10px;display:block}
+.h2{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--dk);margin-bottom:14px;line-height:1.2}
+body.dark .h2{color:#d4e8da}
+.sub{font-size:16px;color:var(--tm);margin-bottom:44px;line-height:1.85;font-weight:300}
+.sec{padding:80px 60px}
+.centered{text-align:center}
+.centered .sub,.centered .h2{max-width:600px;margin-left:auto;margin-right:auto}
+
+/* ─── FOOTER ─── */
+footer{background:#152b1d;padding:36px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.f-logo img{height:38px;width:auto;opacity:.65}
+.f-links{display:flex;gap:22px;list-style:none}
+.f-links a{font-size:12px;color:#3a6048;text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s}
+.f-links a:hover{color:var(--mu)}
+.f-copy{font-size:11px;color:#2a4a32;letter-spacing:1px}
+
+/* ─── SENTIMENT BAND (replaces trust strip) ─── */
+.sentiment-band{background:var(--mg);overflow:hidden;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.1)}
+.sentiment-track{display:flex;animation:scroll-left 36s linear infinite;width:max-content}
+.sentiment-band:hover .sentiment-track{animation-play-state:paused}
+.sentiment-item{display:flex;align-items:center;gap:20px;padding:16px 40px;flex-shrink:0}
+.sentiment-quote{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;font-weight:300;color:rgba(255,255,255,.82);white-space:nowrap}
+.sentiment-sep{width:5px;height:5px;border-radius:50%;background:var(--lt);flex-shrink:0;opacity:.5}
+@keyframes scroll-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ti{font-size:12px;letter-spacing:2px;color:var(--mu);text-transform:uppercase;display:flex;align-items:center;gap:8px;cursor:default;position:relative;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s;white-space:nowrap}
+.ti.visible{opacity:1;transform:none}
+.td{width:6px;height:6px;border-radius:50%;background:var(--lt);flex-shrink:0}
+/* Tooltip */
+.ti-tooltip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);background:var(--dk);color:rgba(255,255,255,.85);font-size:11px;letter-spacing:.5px;text-transform:none;padding:8px 12px;border-radius:6px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;z-index:10;line-height:1.5;text-align:center;max-width:200px;white-space:normal}
+.ti-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--dk)}
+.ti:hover .ti-tooltip{opacity:1}
+
+/* ─── CTA BAND ─── */
+.cta-sec{background:var(--dk);padding:90px 60px;text-align:center}
+.cta-sec h2{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--wh);margin-bottom:14px;line-height:1.2}
+.cta-sec h2 em{font-style:italic;color:var(--lt)}
+.cta-sec p{font-size:16px;color:var(--pl);margin-bottom:34px;line-height:1.85;font-weight:300;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-sub{font-size:13px;color:rgba(159,225,203,.4);margin-top:14px;letter-spacing:1px}
+
+/* ─── HERO ─── */
+.hero{position:relative;padding:90px 60px;display:grid;grid-template-columns:1fr 420px;gap:80px;align-items:center;min-height:560px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1e3d28 0%,#2c5f3e 50%,#1a4a2e 100%);background-size:300% 300%;animation:heroGrad 12s ease infinite}
+@keyframes heroGrad{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero-bg-orb{position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(29,158,117,.08) 0%,transparent 70%);top:-200px;right:-200px;pointer-events:none;animation:orbFloat 8s ease-in-out infinite}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-20px,20px) scale(1.05)}}
+.hero-text{position:relative;z-index:1}
+.hero-logo{display:none}
+.hero-logo img{height:76px;width:auto}
+.hero-eye{font-size:12px;letter-spacing:2px;color:var(--lt);text-transform:uppercase;margin-bottom:18px;opacity:0;animation:fadeUp .8s .25s var(--ease-out-expo) forwards;white-space:nowrap}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:400;line-height:1.12;color:var(--wh);margin-bottom:20px;text-shadow:0 2px 20px rgba(0,0,0,.15)}
+.hero-h1 em{font-style:italic;color:var(--lt)}
+.hero-word{display:inline;opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s;white-space:pre}
+.hero-word.visible{opacity:1;transform:none}
+.hero-p{font-size:17px;line-height:1.85;color:rgba(255,255,255,.8);margin-bottom:26px;font-weight:300;opacity:0;animation:fadeUp .8s .7s var(--ease-out-expo) forwards}
+.hero-list{list-style:none;margin-bottom:36px;opacity:0;animation:fadeUp .8s .85s var(--ease-out-expo) forwards}
+.hero-list li{font-size:15px;color:rgba(255,255,255,.75);padding:7px 0 7px 22px;position:relative;border-bottom:1px solid rgba(255,255,255,.08)}
+.hero-list li:first-child{border-top:1px solid rgba(255,255,255,.06)}
+.hero-list li::before{content:'—';position:absolute;left:0;color:var(--lt)}
+.hero-note{margin-top:20px;font-size:13px;color:rgba(255,255,255,.3);letter-spacing:1px;opacity:0;animation:fadeUp .8s 1s var(--ease-out-expo) forwards}
+.hero-note span{color:var(--pl)}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .95s var(--ease-out-expo) forwards}
+/* Hero right */
+.hero-right{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px;opacity:0;animation:fadeUp .9s .4s var(--ease-out-expo) forwards}
+.hero-cta-box{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:32px 28px;backdrop-filter:blur(8px)}
+.hcta-lbl{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--pl);margin-bottom:20px;opacity:.8}
+.hcta-h{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--wh);margin-bottom:10px;line-height:1.3}
+.hcta-p{font-size:14px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:24px;font-weight:300}
+.hcta-btn{background:var(--ac);color:var(--wh);border:none;padding:15px 0;border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;width:100%;font-weight:500;transition:background .25s,box-shadow .25s,transform .15s;text-decoration:none;display:block;text-align:center;position:relative;overflow:hidden}
+.hcta-btn:hover{background:var(--mg);box-shadow:0 6px 20px rgba(29,158,117,.4);transform:translateY(-1px)}
+.hero-states{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 18px;text-align:center}
+.hs-lbl{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px}
+.hs-states{font-size:14px;color:rgba(255,255,255,.55);letter-spacing:1px}
+/* Scroll chevron */
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeIn 1s 1.3s ease forwards;cursor:pointer;z-index:2}
+.hero-scroll span{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.hero-scroll-arrow{width:20px;height:20px;border-right:1.5px solid rgba(255,255,255,.3);border-bottom:1.5px solid rgba(255,255,255,.3);transform:rotate(45deg);animation:bounce 2s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(4px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ─── HOW IT WORKS ─── */
+.how-sec{background:var(--wh)}
+body.dark .how-sec{background:#0e1f14}
+.steps{display:flex;max-width:960px;margin:0 auto;position:relative}
+.step-line-wrap{position:absolute;top:23px;left:80px;right:80px;height:1px;background:var(--bd);overflow:hidden}
+.step-line-fill{height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--lt));transition:width 1.2s var(--ease-out-expo)}
+.step{flex:1;text-align:center;padding:0 14px;position:relative;z-index:1;cursor:pointer}
+.step-n{width:48px;height:48px;background:var(--bd);color:var(--wh);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;margin:0 auto 14px;transition:background .6s,box-shadow .6s;position:relative}
+.step-n.filled{background:var(--ac);box-shadow:0 0 0 6px rgba(29,158,117,.12)}
+.step-n.filled::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(29,158,117,.2)}
+.step-t{font-size:13px;font-weight:500;color:var(--dk);margin-bottom:6px;letter-spacing:1.5px;text-transform:uppercase}
+body.dark .step-t{color:#d4e8da}
+.step-d{font-size:14px;color:var(--mu);line-height:1.65;font-weight:300}
+.step-detail{font-size:13px;color:var(--tm);line-height:1.65;margin-top:10px;padding:12px;background:var(--cm);border-radius:8px;max-height:0;overflow:hidden;opacity:0;transition:max-height .4s ease,opacity .3s ease,margin .3s ease}
+.step:hover .step-detail,.step.active .step-detail{max-height:80px;opacity:1}
+
+/* ─── SYMPTOMS ─── */
+.symp-sec{background:var(--cm)}
+body.dark .symp-sec{background:#0d1a10}
+.symp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:960px;margin:0 auto 40px}
+.symp-card{background:var(--wh);border:1px solid var(--bd);border-radius:12px;padding:26px 22px;cursor:pointer;transition:transform .3s var(--ease-out-expo),box-shadow .3s,border-color .3s;position:relative;user-select:none}
+.symp-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(30,61,40,.1)}
+.symp-card.toggled{border-color:var(--ac);border-width:2px;box-shadow:0 8px 28px rgba(29,158,117,.15)}
+.symp-card.toggled .symp-truth{border-left-width:3px}
+.symp-name{font-size:15px;font-weight:500;color:var(--dk);margin-bottom:8px}
+body.dark .symp-name{color:#d4e8da}
+.symp-body{font-size:14px;color:var(--tm);line-height:1.75;margin-bottom:10px;font-weight:300}
+.symp-truth{font-size:13px;color:var(--ac);border-left:2px solid var(--lt);padding-left:10px;line-height:1.55;transition:border-left-width .2s}
+/* I feel this toggle */
+.symp-toggle{position:absolute;top:18px;right:18px;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--bd);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,background .2s}
+.symp-toggle svg{width:12px;height:12px;opacity:0;transition:opacity .2s}
+.symp-card.toggled .symp-toggle{border-color:var(--ac);background:var(--ac)}
+.symp-card.toggled .symp-toggle svg{opacity:1}
+.symp-feel-lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);margin-top:14px;display:block;text-align:right}
+.symp-card.toggled .symp-feel-lbl{color:var(--ac)}
+
+/* Sticky banner */
+.sticky-banner{position:fixed;bottom:-80px;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:18px 24px;background:var(--dk);color:var(--wh);transition:bottom .5s var(--ease-out-expo),opacity .4s;opacity:0}
+.sticky-banner.visible{bottom:0;opacity:1}
+.sticky-banner-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;margin-right:20px;color:var(--pl)}
+.sticky-banner a{background:var(--ac);color:var(--wh);padding:12px 24px;border-radius:3px;text-decoration:none;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;font-family:'Jost',sans-serif;transition:background .2s,transform .15s;white-space:nowrap}
+.sticky-banner a:hover{background:var(--lt);transform:scale(1.03)}
+.sticky-close{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.4);font-size:20px;cursor:pointer;padding:4px}
+
+/* ─── QUIZ MODULE ─── */
+.quiz-sec{background:var(--dk);padding:80px 60px;position:relative;overflow:hidden}
+.quiz-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(29,158,117,.08) 0%,transparent 60%);pointer-events:none}
+.quiz-wrap{max-width:760px;margin:0 auto;position:relative;z-index:1}
+.quiz-progress{display:flex;gap:6px;margin-bottom:32px}
+.qp-dot{flex:1;height:3px;background:rgba(255,255,255,.12);border-radius:2px;transition:background .4s}
+.qp-dot.active{background:var(--ac)}
+.qp-dot.done{background:rgba(29,158,117,.4)}
+.quiz-q-lbl{font-size:12px;letter-spacing:3px;color:var(--lt);text-transform:uppercase;margin-bottom:12px}
+.quiz-question{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--wh);margin-bottom:32px;line-height:1.25;opacity:0;transform:translateX(20px);transition:opacity .4s,transform .4s}
+.quiz-question.visible{opacity:1;transform:none}
+.quiz-options{display:flex;gap:10px;flex-wrap:wrap}
+.quiz-opt{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:14px 22px;color:rgba(255,255,255,.7);font-size:14px;letter-spacing:.5px;cursor:pointer;transition:background .2s,border-color .2s,color .2s,transform .15s;font-family:'Jost',sans-serif}
+.quiz-opt:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);transform:translateY(-1px)}
+.quiz-opt.selected{background:rgba(29,158,117,.15);border-color:var(--ac);color:var(--wh)}
+.quiz-timer{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.25);text-transform:uppercase;margin-top:24px}
+/* Quiz result */
+.quiz-result{display:none;opacity:0;transition:opacity .4s}
+.quiz-result.visible{display:block;opacity:1}
+.qr-badge{display:inline-block;background:var(--ac);color:var(--wh);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:16px;font-family:'Jost',sans-serif;font-weight:500}
+.qr-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:var(--wh);margin-bottom:12px;line-height:1.2}
+.qr-title em{color:var(--lt);font-style:italic}
+.qr-desc{font-size:15px;color:rgba(255,255,255,.6);line-height:1.85;margin-bottom:28px;font-weight:300;max-width:540px}
+.qr-actions{display:flex;gap:12px;flex-wrap:wrap}
+.qr-restart{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);padding:12px 20px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s}
+.qr-restart:hover{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.75)}
+
+/* ─── PRICING ─── */
+.price-sec{background:var(--wh)}
+body.dark .price-sec{background:#0e1f14}
+.billing-toggle{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:36px}
+.billing-label{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);transition:color .2s}
+.billing-label.active{color:var(--dk)}
+body.dark .billing-label.active{color:#d4e8da}
+.billing-switch{width:48px;height:26px;background:var(--bd);border-radius:13px;border:none;cursor:pointer;position:relative;transition:background .3s}
+.billing-switch.on{background:var(--ac)}
+.billing-switch::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--wh);transition:transform .3s;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.billing-switch.on::after{transform:translateX(22px)}
+.billing-save{font-size:11px;color:var(--ac);letter-spacing:1px;text-transform:uppercase}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:960px;margin:0 auto 18px}
+.plan{background:var(--cl);border:1px solid var(--bd);border-radius:14px;padding:28px 22px;display:flex;flex-direction:column;transition:border-color .2s,transform .3s,box-shadow .3s}
+.plan.pop{background:var(--wh);border:2px solid rgba(29,158,117,.4);transform:scale(1.02);position:relative}
+.pop-glow{position:absolute;inset:-2px;border-radius:15px;border:2px solid var(--ac);opacity:0;animation:popGlow 2.5s ease-in-out infinite}
+@keyframes popGlow{0%,100%{opacity:0;box-shadow:0 0 0 0 rgba(29,158,117,0)}50%{opacity:1;box-shadow:0 0 20px 4px rgba(29,158,117,.2)}}
+.pop-badge{display:inline-block;background:var(--ac);color:var(--wh);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 11px;border-radius:20px;margin-bottom:12px;align-self:flex-start;font-weight:500}
+.plan-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:var(--dk);margin-bottom:2px}
+body.dark .plan-name{color:#d4e8da}
+.plan-for{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);margin-bottom:14px}
+.plan-price{font-size:34px;font-weight:300;color:var(--mg);transition:all .3s}
+.plan-price.animating{opacity:0;transform:translateY(-6px)}
+.plan-price span{font-size:14px;color:var(--mu)}
+.plan-ob{font-size:13px;color:var(--mu);font-style:italic;margin-bottom:16px}
+.plan-hr{border:none;border-top:1px solid var(--bd);margin-bottom:14px}
+.plan-desc{font-size:14px;color:var(--tm);line-height:1.75;flex:1;margin-bottom:18px;font-weight:300}
+.plan-btn{background:var(--mg);color:var(--wh);border:none;padding:13px 0;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;width:100%;font-weight:500;transition:background .2s,transform .15s;text-decoration:none;display:block;text-align:center}
+.plan-btn:hover{background:var(--dk);transform:translateY(-1px)}
+.plan.pop .plan-btn{background:var(--ac)}
+.plan.pop .plan-btn:hover{background:var(--mg)}
+/* Calculator */
+.price-calc{background:var(--cm);border:1px solid var(--bd);border-radius:12px;padding:20px 28px;max-width:960px;margin:18px auto 0;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+body.dark .price-calc{background:#152b1d;border-color:#1e3d28}
+.price-calc-label{font-size:14px;color:var(--tm)}
+.price-calc-num{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--mg);font-weight:300;transition:all .3s}
+.price-calc-num.animating{opacity:0;transform:scale(0.95)}
+.bundle{background:var(--dk);border-radius:14px;padding:32px 40px;max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:40px;margin-top:18px}
+.bundle h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--wh);margin-bottom:8px}
+.bundle p{font-size:14px;color:var(--pl);line-height:1.75;font-weight:300;max-width:460px}
+.bundle-r{text-align:center;flex-shrink:0}
+.bundle-price{font-size:38px;font-weight:300;color:var(--wh);display:block;transition:all .3s}
+.bundle-unit{font-size:13px;color:var(--pl)}
+.bundle-ob{font-size:12px;color:rgba(159,225,203,.5);display:block;margin-top:4px;font-style:italic}
+.bundle-btn{background:var(--wh);color:var(--dk);border:none;padding:13px 26px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:14px;display:inline-block;font-weight:500;text-decoration:none;transition:background .2s,transform .15s}
+.bundle-btn:hover{background:var(--cm);transform:translateY(-1px)}
+
+/* ─── ABOUT PREVIEW ─── */
+.about-prev{background:var(--cm);padding:80px 60px;display:grid;grid-template-columns:260px 1fr;gap:64px;align-items:start;overflow:hidden}
+body.dark .about-prev{background:#0d1a10}
+.about-img{width:100%;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 12px 40px rgba(30,61,40,.15)}
+.about-img img{width:100%;height:auto;display:block;object-fit:cover;object-position:top center}
+.about-text .h2{text-align:left}
+.about-quote{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--mg);border-left:2px solid var(--lt);padding-left:16px;margin:18px 0;line-height:1.5;min-height:1.5em}
+.typewriter-cursor{display:inline-block;width:2px;height:1em;background:var(--lt);margin-left:2px;animation:blink .7s ease-in-out infinite;vertical-align:text-bottom}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.creds{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 22px}
+.cred{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mg);background:var(--wh);border:1px solid var(--bd);padding:5px 13px;border-radius:20px;opacity:0;transform:translateY(6px);transition:opacity .4s,transform .4s}
+.cred.visible{opacity:1;transform:none}
+
+/* ─── MOBILE STICKY CTA ─── */
+.mobile-cta{display:none;position:fixed;bottom:24px;right:24px;z-index:150;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
+.mobile-cta.visible{opacity:1;transform:none}
+.mobile-cta a{background:var(--ac);color:var(--wh);padding:14px 22px;border-radius:50px;text-decoration:none;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;font-family:'Jost',sans-serif;box-shadow:0 4px 20px rgba(29,158,117,.4);display:flex;align-items:center;gap:8px;transition:background .2s,transform .15s,box-shadow .2s}
+.mobile-cta a:hover{background:var(--mg);transform:translateY(-2px);box-shadow:0 8px 28px rgba(29,158,117,.5)}
+
+/* ─── SCROLL ANIMATION ─── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease-out-expo),transform .7s var(--ease-out-expo)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:860px){
+  nav{padding:0 18px;height:62px}
+  .utility-bar{padding:0 18px;height:30px;font-size:11px}
+  .util-states b{display:inline}
+  .util-right{gap:14px}
+  .util-right .util-divider,.util-right .util-portal-text{display:none}
+  .nav-links{display:none}
+  .nav-logo-tag{display:none}
+  .nav-logo-name{font-size:18px}
+  .nav-logo img{height:42px}
+  .nav-cta-text{display:none}
+  .nav-cta{padding:10px 14px}
+  .nav-burger{display:flex}
+  .sec{padding:56px 24px}
+  .trust-bar{padding:10px 16px;gap:10px;flex-wrap:wrap;justify-content:flex-start}
+  footer{padding:24px;flex-direction:column;text-align:center}
+  .cta-sec{padding:60px 24px}.cta-sec h2{font-size:34px}
+  .hero{grid-template-columns:1fr;padding:60px 24px;min-height:auto}
+  .hero-h1{font-size:40px}
+  .hero-right{display:none}
+  .hero-scroll{display:none}
+  .steps{flex-direction:column;gap:24px}
+  .step-line-wrap{display:none}
+  .symp-grid{grid-template-columns:1fr}
+  .price-grid{grid-template-columns:1fr}.plan.pop{transform:none}
+  .bundle{flex-direction:column;padding:24px;gap:20px;text-align:center}
+  .about-prev{grid-template-columns:1fr;padding:56px 24px;gap:32px}.about-img{max-width:280px;margin:0 auto}
+  .quiz-sec{padding:56px 24px}
+  .quiz-question{font-size:26px}
+  .mobile-cta{display:block}
+  .price-calc{flex-direction:column;text-align:center;gap:8px}
+}
+@media(min-width:861px){
+  .mobile-cta{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Loading screen -->
+<div id="loader">
+  <svg class="loader-mark" viewBox="0 0 60 60" fill="none">
+    <path class="loader-path" d="M10 50 Q20 10 30 30 Q40 50 50 10" stroke="#1D9E75" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <circle cx="30" cy="50" r="3" fill="#5DCAA5" opacity="0.5"/>
+  </svg>
+</div>
+
+<!-- Page transition veil -->
+<div id="page-veil"></div>
+
+<!-- Sticky symptom banner -->
+<div class="sticky-banner" id="sticky-banner">
+  <span class="sticky-banner-text">Sounds like you.</span>
+  <a href="book.html">Book your consult →</a>
+  <button class="sticky-close" onclick="closeBanner()">×</button>
+</div>
+
+<!-- Mobile sticky CTA -->
+<div class="mobile-cta" id="mobile-cta">
+  <a href="book.html">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 2v4M16 2v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    Book consult
+  </a>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="site-header">
+  <!-- Top utility bar -->
+  <div class="utility-bar">
+    <div class="util-left">
+      <span class="util-states">
+        <span class="util-states-dot"></span>
+        Licensed in <b>Arizona</b> · <b>New Mexico</b> · <b>North Dakota</b>
+      </span>
+    </div>
+    <div class="util-right">
+      <a href="tel:+15555550100" aria-label="Call clinic">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>(555) 555-0100</span>
+      </a>
+      <span class="util-divider"></span>
+      <a href="portal.html" aria-label="Patient portal login">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="util-portal-text">Patient portal</span>
+      </a>
+    </div>
+  </div>
+  <!-- Main nav -->
+  <nav id="main-nav">
+    <a href="index.html" class="nav-logo" aria-label="Thryve Health home">
+      <img src="assets/logo-nav.png" alt="Thryve Health">
+    </a>
+    <ul class="nav-links">
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode"></button>
+      <a href="book.html" class="nav-cta">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="nav-cta-text">Book a consult</span>
+      </a>
+      <button class="nav-burger" id="nav-burger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile drawer -->
+<div class="nav-drawer" id="nav-drawer">
+  <div class="nav-drawer-bg" id="drawer-bg"></div>
+  <div class="nav-drawer-panel">
+    <button class="drawer-close" id="drawer-close" aria-label="Close menu">×</button>
+    <div class="drawer-links">
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+      <a href="portal.html">Patient portal</a>
+    </div>
+    <a href="book.html" class="drawer-cta">Book a consult</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg-orb"></div>
+  <div class="hero-text">
+    <div class="hero-logo"><img src="assets/logo-hero.png" alt="Thryve"></div>
+    <p class="hero-eye">For women in their 40s · AZ · NM · ND</p>
+    <h1 class="hero-h1" id="hero-h1"></h1>
+    <p class="hero-p">Exhausted, gaining weight, sleeping badly, and told your labs are normal. There may be a real reason — and it deserves a real review.</p>
+    <ul class="hero-list">
+      <li>Fatigue that sleep doesn't fix</li>
+      <li>Stubborn weight gain no matter what you try</li>
+      <li>Poor sleep, night sweats, waking at 3am</li>
+      <li>Mood shifts, brain fog, low libido</li>
+      <li>Dismissed with "your labs look fine"</li>
+    </ul>
+    <div class="hero-btns">
+      <a href="book.html" class="btn-p">Book your consult</a>
+      <a href="#quiz" class="btn-w" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.15);">Find your program</a>
+    </div>
+    <p class="hero-note">Cash-pay · <span>HSA &amp; FSA accepted</span> · HIPAA-compliant</p>
+  </div>
+  <div class="hero-right">
+    <div class="hero-cta-box">
+      <div class="hcta-lbl">Get started today</div>
+      <div class="hcta-h">Book your secure consult</div>
+      <p class="hcta-p">Not sure where to start? Begin with our free 15-minute discovery call — no commitment, no pressure.</p>
+      <a href="book.html" class="hcta-btn">Book now</a>
+    </div>
+    <div class="hero-states">
+      <div class="hs-lbl">Currently accepting patients in</div>
+      <div class="hs-states">Arizona · New Mexico · North Dakota</div>
+    </div>
+  </div>
+  <div class="hero-scroll" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">
+    <span>Scroll</span>
+    <div class="hero-scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- SENTIMENT BAND -->
+<div class="sentiment-band" id="trust-bar">
+  <div class="sentiment-track">
+    <div class="sentiment-item"><span class="sentiment-quote">"You are describing a pattern that deserves a real answer."</span><span class="sentiment-sep"></span></div>
+    <div class="sentiment-item"><span class="sentiment-quote">"Your labs can look normal and you can still feel terrible."</span><span class="sentiment-sep"></span></div>
+    <div class="sentiment-item"><span class="sentiment-quote">"Perimenopause is not a diagnosis — it's a starting point."</span><span class="sentiment-sep"></span></div>
+    <div class="sentiment-item"><span class="sentiment-quote">"Weight gain in your 40s is hormonal. It is not your fault."</span><span class="sentiment-sep"></span></div>
+    <div class="sentiment-item"><span class="sentiment-quote">"You deserve a provider who has actually read the research."</span><span class="sentiment-sep"></span></div>
+    <div class="sentiment-item"><span class="sentiment-quote">"Being told you're fine when you don't feel fine is not care."</span><span class="sentiment-sep"></span></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="sentiment-item"><span class="sentiment-quote">"You are describing a pattern that deserves a real answer."</span><span class="sentiment-sep"></span></div>
+    <div class="sentiment-item"><span class="sentiment-quote">"Your labs can look normal and you can still feel terrible."</span><span class="sentiment-sep"></span></div>
+    <div class="sentiment-item"><span class="sentiment-quote">"Perimenopause is not a diagnosis — it's a starting point."</span><span class="sentiment-sep"></span></div>
+    <div class="sentiment-item"><span class="sentiment-quote">"Weight gain in your 40s is hormonal. It is not your fault."</span><span class="sentiment-sep"></span></div>
+    <div class="sentiment-item"><span class="sentiment-quote">"You deserve a provider who has actually read the research."</span><span class="sentiment-sep"></span></div>
+    <div class="sentiment-item"><span class="sentiment-quote">"Being told you're fine when you don't feel fine is not care."</span><span class="sentiment-sep"></span></div>
+  </div>
+</div>
+<section class="quiz-sec" id="quiz">
+  <div class="quiz-wrap">
+    <div class="centered" style="margin-bottom:40px;">
+      <span class="lbl" style="color:var(--lt);">60-second quiz</span>
+      <h2 class="h2" style="color:var(--wh);font-size:38px;">Find your starting point</h2>
+      <p style="font-size:15px;color:rgba(255,255,255,.5);font-weight:300;max-width:480px;margin:0 auto;">Answer 5 quick questions. We'll point you toward the program most likely to help.</p>
+    </div>
+
+    <div id="quiz-body">
+      <div class="quiz-progress" id="quiz-progress">
+        <div class="qp-dot active" id="qd0"></div>
+        <div class="qp-dot" id="qd1"></div>
+        <div class="qp-dot" id="qd2"></div>
+        <div class="qp-dot" id="qd3"></div>
+        <div class="qp-dot" id="qd4"></div>
+      </div>
+      <div class="quiz-q-lbl" id="quiz-q-lbl">Question 1 of 5</div>
+      <div class="quiz-question visible" id="quiz-question"></div>
+      <div class="quiz-options" id="quiz-options"></div>
+      <div class="quiz-timer" id="quiz-timer"></div>
+    </div>
+
+    <div class="quiz-result" id="quiz-result">
+      <div class="qr-badge" id="qr-badge">Recommended</div>
+      <div class="qr-title" id="qr-title"></div>
+      <div class="qr-desc" id="qr-desc"></div>
+      <div class="qr-actions">
+        <a href="book.html" class="btn-p" id="qr-cta">Book your consult →</a>
+        <button class="qr-restart" onclick="restartQuiz()">Start over</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec how-sec reveal" id="how">
+  <div class="centered" style="margin-bottom:48px;">
+    <span class="lbl" style="text-align:center;">How it works</span>
+    <h2 class="h2">Simple. Private. One step at a time.</h2>
+  </div>
+  <div class="steps" id="steps">
+    <div class="step-line-wrap"><div class="step-line-fill" id="step-line"></div></div>
+    <div class="step" data-step="0">
+      <div class="step-n" id="sn0">1</div>
+      <div class="step-t">Book</div>
+      <div class="step-d">Choose a time. Complete a secure intake so we arrive prepared.</div>
+      <div class="step-detail">Takes under 5 minutes. You'll receive a secure intake link the moment you schedule.</div>
+    </div>
+    <div class="step" data-step="1">
+      <div class="step-n" id="sn1">2</div>
+      <div class="step-t">First visit</div>
+      <div class="step-d">45–60 min. We listen to the full pattern — not just one symptom.</div>
+      <div class="step-detail">Video or phone — your choice. Bring any labs you already have.</div>
+    </div>
+    <div class="step" data-step="2">
+      <div class="step-n" id="sn2">3</div>
+      <div class="step-t">Labs</div>
+      <div class="step-d">We order the right panels. You get drawn at any local Quest or Labcorp.</div>
+      <div class="step-detail">Results come directly to us. We review everything in context of your symptoms.</div>
+    </div>
+    <div class="step" data-step="3">
+      <div class="step-n" id="sn3">4</div>
+      <div class="step-t">Your plan</div>
+      <div class="step-d">Written plan, plain language, Rx if indicated, clear next steps.</div>
+      <div class="step-detail">A document you can actually follow. Not vague advice — a real clinical plan.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec price-sec reveal" id="pricing">
+  <div class="centered" style="margin-bottom:20px;">
+    <span class="lbl" style="text-align:center;">Membership pricing</span>
+    <h2 class="h2">Transparent pricing, no surprises</h2>
+    <p class="sub" style="margin-bottom:24px;">Membership covers all clinical management. Labs and medications billed separately.</p>
+    <div class="billing-toggle">
+      <span class="billing-label active" id="bl-monthly">Monthly billing</span>
+      <button class="billing-switch" id="billing-switch" onclick="toggleBilling()" aria-label="Toggle billing period"></button>
+      <span class="billing-label" id="bl-quarterly">3-Month plan</span>
+      <span class="billing-save" id="billing-save-lbl" style="display:none;">Save ~10%</span>
+    </div>
+  </div>
+  <div class="price-grid">
+    <div class="plan pop">
+      <div class="pop-glow"></div>
+      <div class="pop-badge">Most popular</div>
+      <div class="plan-name">Female HRT</div>
+      <div class="plan-for">Hormone optimization</div>
+      <div class="plan-price" id="hrt-price">$169 <span>/ mo</span></div>
+      <div class="plan-ob" id="hrt-ob">+ $199 one-time onboarding</div>
+      <hr class="plan-hr">
+      <p class="plan-desc">Comprehensive HRT for perimenopause — estrogen, progesterone, testosterone, DHEA. Personalized to your labs and symptoms.</p>
+      <a href="book.html" class="plan-btn">Get started</a>
+    </div>
+    <div class="plan">
+      <div class="plan-name">GLP-1 Weight Loss</div>
+      <div class="plan-for">Metabolic &amp; weight management</div>
+      <div class="plan-price" id="glp-price">$159 <span>/ mo</span></div>
+      <div class="plan-ob" id="glp-ob">+ $149 one-time onboarding</div>
+      <hr class="plan-hr">
+      <p class="plan-desc">Medically supervised semaglutide or tirzepatide through a compounding pharmacy. Medication ~$150–300/mo billed separately.</p>
+      <a href="book.html" class="plan-btn">Get started</a>
+    </div>
+    <div class="plan">
+      <div class="plan-name">Peptide Therapy</div>
+      <div class="plan-for">Recovery &amp; optimization</div>
+      <div class="plan-price" id="pep-price">+$79 <span>/ mo</span></div>
+      <div class="plan-ob">Add-on · existing members only</div>
+      <hr class="plan-hr">
+      <p class="plan-desc">BPC-157, TB-500, Ipamorelin/CJC and other protocols for recovery, energy, and longevity. Available once established on a core program.</p>
+      <a href="book.html" class="plan-btn">Ask about this</a>
+    </div>
+  </div>
+  <div class="bundle" style="margin-top:18px;">
+    <div>
+      <h3>Optimization Bundle — HRT + GLP-1</h3>
+      <p>Hormones and metabolism are deeply connected in your 40s. Full management of both at our best rate.</p>
+    </div>
+    <div class="bundle-r">
+      <span class="bundle-price" id="bundle-price">$249</span>
+      <span class="bundle-unit">/ month</span>
+      <span class="bundle-ob">+ $249 one-time onboarding</span>
+      <a href="book.html" class="bundle-btn">Get started</a>
+    </div>
+  </div>
+  <!-- Calculator -->
+  <div class="price-calc reveal">
+    <div>
+      <div class="plan-for" style="margin-bottom:4px;">Your estimated 12-month investment</div>
+      <div class="plan-desc" style="font-size:13px;margin:0;">Based on selected plan · membership only · excludes labs &amp; meds</div>
+    </div>
+    <div>
+      <div class="price-calc-num" id="calc-total">$2,227</div>
+      <div style="font-size:12px;color:var(--mu);text-align:right;margin-top:2px;" id="calc-note">HRT · monthly · incl. onboarding</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:28px;"><a href="services.html" style="font-size:14px;color:var(--ac);text-decoration:none;letter-spacing:1px;">See full service details and lab menu →</a></div>
+</section>
+
+<!-- ABOUT PREVIEW -->
+<section class="about-prev reveal" id="about">
+  <div class="about-img" id="about-img">
+    <img src="assets/mika-photo.png" alt="Mika, NP" loading="lazy" id="parallax-photo">
+  </div>
+  <div class="about-text">
+    <span class="lbl">About your provider</span>
+    <h2 class="h2">I built this clinic because women in their 40s deserve better than a 10-minute visit.</h2>
+    <p style="font-size:15px;color:var(--tm);line-height:1.85;font-weight:300;margin-bottom:12px;">I'm a nurse practitioner with a background in primary care and wellness. I started Thryve because I watched too many women leave appointments with their concerns minimized, their labs called normal, and no real plan.</p>
+    <div class="about-quote" id="about-quote"><span class="typewriter-cursor"></span></div>
+    <div class="creds" id="creds">
+      <span class="cred">Nurse Practitioner</span>
+      <span class="cred">DEA Licensed · AZ &amp; NM</span>
+      <span class="cred">HRT Specialist</span>
+      <span class="cred">GLP-1 Prescriber</span>
+    </div>
+    <a href="about.html" class="btn-d">Read her full story →</a>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-sec reveal">
+  <h2>You've been patient long enough.<br><em>Let's figure out what's going on.</em></h2>
+  <p>Book your consult today. You'll leave with clarity, a written plan, and a real next step.</p>
+  <a href="book.html" class="btn-w">Book your secure consult</a>
+  <p class="cta-sub">Or start with a free 15-min discovery call — no commitment required</p>
+</section>
+
+<footer>
+  <div class="f-logo"><a href="index.html"><img src="assets/logo-footer.png" alt="Thryve"></a></div>
+  <ul class="f-links">
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="portal.html">Patient portal</a></li>
+    <li><a href="intake.html">Intake form</a></li>
+    <li><a href="book.html">Book</a></li>
+  </ul>
+  <div class="f-copy">© 2026 Thryve Health &amp; Wellness · AZ · NM · ND</div>
+</footer>
+
+<script>
+// ── LOADING ──
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('done'), 300);
+});
+
+// ── PAGE TRANSITIONS ──
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a[href]');
+  if (!a) return;
+  const href = a.getAttribute('href');
+  if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+  e.preventDefault();
+  const veil = document.getElementById('page-veil');
+  veil.classList.add('visible');
+  setTimeout(() => { window.location.href = href; }, 320);
+});
+
+// ── MOBILE DRAWER ──
+const burger = document.getElementById('nav-burger');
+const drawer = document.getElementById('nav-drawer');
+const drawerBg = document.getElementById('drawer-bg');
+const drawerClose = document.getElementById('drawer-close');
+function openDrawer() { drawer.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeDrawer() { drawer.classList.remove('open'); document.body.style.overflow = ''; }
+burger && burger.addEventListener('click', openDrawer);
+drawerClose && drawerClose.addEventListener('click', closeDrawer);
+drawerBg && drawerBg.addEventListener('click', closeDrawer);
+
+// ── SCROLL EFFECTS ──
+const nav = document.getElementById('main-nav');
+function handleScroll() {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+  document.getElementById('site-header').classList.toggle('scrolled', window.scrollY > 20);
+  // Mobile CTA appears after hero
+  const hero = document.getElementById('hero');
+  const heroBtm = hero.offsetTop + hero.offsetHeight;
+  const mobileCta = document.getElementById('mobile-cta');
+  if (window.scrollY > heroBtm - 100) {
+    mobileCta.classList.add('visible');
+  } else {
+    mobileCta.classList.remove('visible');
+  }
+  // Parallax
+  doParallax();
+}
+window.addEventListener('scroll', handleScroll, { passive: true });
+handleScroll(); // run on load
+
+// ── REVEAL ON SCROLL ──
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => revealObs.observe(el));
+
+// sentiment band uses pure CSS animation — no JS needed
+
+// ── HERO WORD REVEAL ──
+const heroH1 = document.getElementById('hero-h1');
+let line1 = "You're doing everything right.";
+let line2 = "So why do you still feel this way?";
+window.setHeroHeadline = function(l1, l2) {
+  line1 = l1; line2 = l2;
+  buildHeroHeadline();
+  // Reveal immediately so words don't stay invisible
+  document.querySelectorAll('#hero-h1 .hero-word').forEach(w => w.classList.add('visible'));
+};
+function buildHeroHeadline() {
+  heroH1.innerHTML = '';
+  const words1 = line1.split(' ');
+  const words2 = line2.split(' ');
+  const span1 = document.createElement('span');
+  span1.style.cssText = 'display:block;word-spacing:normal';
+  words1.forEach((w, i) => {
+    const s = document.createElement('span');
+    s.className = 'hero-word';
+    s.style.transitionDelay = (0.45 + i * 0.07) + 's';
+    s.textContent = w;
+    span1.appendChild(s);
+    if (i < words1.length - 1) span1.appendChild(document.createTextNode(' '));
+  });
+  const span2 = document.createElement('em');
+  span2.style.cssText = 'display:block;word-spacing:normal';
+  words2.forEach((w, i) => {
+    const s = document.createElement('span');
+    s.className = 'hero-word';
+    s.style.transitionDelay = (0.55 + words1.length * 0.07 + i * 0.07) + 's';
+    s.textContent = w;
+    span2.appendChild(s);
+    if (i < words2.length - 1) span2.appendChild(document.createTextNode(' '));
+  });
+  heroH1.appendChild(span1);
+  heroH1.appendChild(span2);
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.querySelectorAll('.hero-word').forEach(el => el.classList.add('visible'));
+  }));
+}
+buildHeroHeadline();
+
+// ── HOW IT WORKS STEP ANIMATION ──
+const stepsSection = document.getElementById('steps');
+let stepsAnimated = false;
+const stepsObs = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting && !stepsAnimated) {
+    stepsAnimated = true;
+    [0,1,2,3].forEach((i) => {
+      setTimeout(() => {
+        document.getElementById('sn' + i).classList.add('filled');
+        const pct = ((i + 1) / 4) * 100;
+        document.getElementById('step-line').style.width = pct + '%';
+      }, i * 320);
+    });
+    stepsObs.disconnect();
+  }
+}, { threshold: 0.4 });
+stepsObs.observe(stepsSection);
+
+// ── SYMPTOMS TOGGLE ──
+const toggledSymps = new Set();
+function toggleSymp(idx) {
+  const card = document.querySelector('.symp-card[data-idx="' + idx + '"]');
+  if (toggledSymps.has(idx)) {
+    toggledSymps.delete(idx);
+    card.classList.remove('toggled');
+  } else {
+    toggledSymps.add(idx);
+    card.classList.add('toggled');
+  }
+  const banner = document.getElementById('sticky-banner');
+  if (toggledSymps.size >= 2) {
+    banner.classList.add('visible');
+  } else {
+    banner.classList.remove('visible');
+  }
+}
+function closeBanner() {
+  document.getElementById('sticky-banner').classList.remove('visible');
+}
+
+// ── QUIZ ──
+const quizData = [
+  {
+    q: "How would you describe your energy most days?",
+    opts: ["Exhausted no matter what", "Tired by afternoon", "Occasionally low", "Generally okay"]
+  },
+  {
+    q: "How is your sleep?",
+    opts: ["Poor — waking often / night sweats", "Takes forever to fall asleep", "Could be better", "Mostly fine"]
+  },
+  {
+    q: "Have you noticed weight changes in the last 1–2 years?",
+    opts: ["Yes — gaining despite trying hard", "Yes — especially around my middle", "A little, not dramatic", "Weight has been stable"]
+  },
+  {
+    q: "How is your mood and mental clarity?",
+    opts: ["Brain fog, anxious, irritable", "Mood swings, not like myself", "Occasional dips", "Mostly steady"]
+  },
+  {
+    q: "What are you most hoping to address?",
+    opts: ["Hormones & perimenopause symptoms", "Weight loss & metabolism", "Both — they feel connected", "Not sure yet"]
+  }
+];
+
+const quizScores = { hrt: 0, glp: 0, bundle: 0 };
+let currentQ = 0;
+const answers = [];
+
+function scoreAnswer(qIdx, optIdx) {
+  const weights = [
+    [[2,0,0],[1,0,0],[0,0,0],[0,1,0]],
+    [[2,0,0],[1,0,0],[1,0,0],[0,0,0]],
+    [[0,2,0],[0,2,0],[0,1,0],[0,0,0]],
+    [[2,0,0],[1,0,0],[0,0,0],[0,0,0]],
+    [[2,0,0],[0,2,0],[0,0,3],[0,1,1]]
+  ];
+  const w = weights[qIdx][optIdx];
+  quizScores.hrt += w[0];
+  quizScores.glp += w[1];
+  quizScores.bundle += w[2];
+}
+
+function showQuestion(idx) {
+  const q = quizData[idx];
+  const qEl = document.getElementById('quiz-question');
+  const opts = document.getElementById('quiz-options');
+  const lbl = document.getElementById('quiz-q-lbl');
+  lbl.textContent = 'Question ' + (idx + 1) + ' of ' + quizData.length;
+  qEl.classList.remove('visible');
+  setTimeout(() => {
+    qEl.textContent = q.q;
+    qEl.classList.add('visible');
+    opts.innerHTML = '';
+    q.opts.forEach((o, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = o;
+      btn.onclick = () => selectAnswer(idx, i, btn);
+      opts.appendChild(btn);
+    });
+    // Progress
+    document.querySelectorAll('.qp-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+      d.classList.toggle('done', i < idx);
+    });
+  }, 200);
+}
+
+function selectAnswer(qIdx, optIdx, btn) {
+  document.querySelectorAll('.quiz-opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[qIdx] = optIdx;
+  scoreAnswer(qIdx, optIdx);
+  setTimeout(() => {
+    currentQ++;
+    if (currentQ < quizData.length) {
+      showQuestion(currentQ);
+    } else {
+      showQuizResult();
+    }
+  }, 400);
+}
+
+function showQuizResult() {
+  document.getElementById('quiz-body').style.display = 'none';
+  const result = document.getElementById('quiz-result');
+  result.style.display = 'block';
+  setTimeout(() => result.classList.add('visible'), 50);
+
+  let rec = 'hrt';
+  if (quizScores.bundle >= 3) rec = 'bundle';
+  else if (quizScores.glp > quizScores.hrt) rec = 'glp';
+
+  const recs = {
+    hrt: {
+      badge: 'Recommended: Female HRT',
+      title: 'Hormone optimization <em>may be your starting point.</em>',
+      desc: 'Your responses point toward perimenopause-related hormone changes as the underlying driver of how you feel. HRT addresses fatigue, sleep, mood, brain fog, and more at the root level.',
+      cta: 'Book a hormone consult'
+    },
+    glp: {
+      badge: 'Recommended: GLP-1 Program',
+      title: 'Metabolic support <em>may be what you need.</em>',
+      desc: 'Your responses suggest metabolic changes — insulin resistance, weight that won\'t shift, energy dips — as the primary picture. GLP-1 therapy combined with lab review can address this directly.',
+      cta: 'Book a metabolic consult'
+    },
+    bundle: {
+      badge: 'Recommended: Optimization Bundle',
+      title: 'Hormones and metabolism <em>may both be in play.</em>',
+      desc: 'Your responses suggest both hormone and metabolic factors are affecting how you feel. The Optimization Bundle addresses both systems together — which often produces the best outcomes in your 40s.',
+      cta: 'Book your bundle consult'
+    }
+  };
+
+  const r = recs[rec];
+  document.getElementById('qr-badge').textContent = r.badge;
+  document.getElementById('qr-title').innerHTML = r.title;
+  document.getElementById('qr-desc').textContent = r.desc;
+  document.getElementById('qr-cta').textContent = r.cta + ' →';
+}
+
+function restartQuiz() {
+  currentQ = 0;
+  quizScores.hrt = 0; quizScores.glp = 0; quizScores.bundle = 0;
+  answers.length = 0;
+  const result = document.getElementById('quiz-result');
+  result.classList.remove('visible');
+  result.style.display = 'none';
+  const body = document.getElementById('quiz-body');
+  body.style.display = 'block';
+  showQuestion(0);
+}
+
+showQuestion(0);
+
+// ── BILLING TOGGLE ──
+let isQuarterly = false;
+const prices = {
+  monthly: { hrt: '$169', glp: '$159', pep: '+$79', bundle: '$249', hrtOb: '+ $199 one-time onboarding', glpOb: '+ $149 one-time onboarding' },
+  quarterly: { hrt: '$152', glp: '$143', pep: '+$71', bundle: '$224', hrtOb: '+ $199 one-time onboarding (billed first month)', glpOb: '+ $149 one-time onboarding (billed first month)' }
+};
+
+function animatePrice(el, newVal) {
+  el.classList.add('animating');
+  setTimeout(() => {
+    el.innerHTML = newVal;
+    el.classList.remove('animating');
+  }, 200);
+}
+
+function updateCalc() {
+  const p = isQuarterly ? prices.quarterly : prices.monthly;
+  const hrtMonthly = parseInt(p.hrt.replace('$',''));
+  const annual = hrtMonthly * 12 + 199;
+  const note = 'HRT · ' + (isQuarterly ? '3-month plan' : 'monthly') + ' · incl. onboarding';
+  const calcEl = document.getElementById('calc-total');
+  calcEl.classList.add('animating');
+  setTimeout(() => {
+    calcEl.textContent = '$' + annual.toLocaleString();
+    document.getElementById('calc-note').textContent = note;
+    calcEl.classList.remove('animating');
+  }, 200);
+}
+
+function toggleBilling() {
+  isQuarterly = !isQuarterly;
+  const sw = document.getElementById('billing-switch');
+  sw.classList.toggle('on', isQuarterly);
+  document.getElementById('bl-monthly').classList.toggle('active', !isQuarterly);
+  document.getElementById('bl-quarterly').classList.toggle('active', isQuarterly);
+  const saveEl = document.getElementById('billing-save-lbl');
+  saveEl.style.display = isQuarterly ? 'inline' : 'none';
+  const p = isQuarterly ? prices.quarterly : prices.monthly;
+  animatePrice(document.getElementById('hrt-price'), p.hrt + ' <span>/ mo</span>');
+  animatePrice(document.getElementById('glp-price'), p.glp + ' <span>/ mo</span>');
+  animatePrice(document.getElementById('pep-price'), p.pep + ' <span>/ mo</span>');
+  animatePrice(document.getElementById('bundle-price'), p.bundle);
+  document.getElementById('hrt-ob').textContent = p.hrtOb;
+  document.getElementById('glp-ob').textContent = p.glpOb;
+  updateCalc();
+}
+
+// ── ABOUT TYPEWRITER ──
+const quote = '"You are describing a pattern that deserves a real review."';
+const quoteEl = document.getElementById('about-quote');
+let quoteStarted = false;
+const aboutObs = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting && !quoteStarted) {
+    quoteStarted = true;
+    let i = 0;
+    const cursor = '<span class="typewriter-cursor"></span>';
+    function type() {
+      if (i <= quote.length) {
+        quoteEl.innerHTML = quote.slice(0, i) + cursor;
+        i++;
+        setTimeout(type, i < 5 ? 40 : 30 + Math.random() * 20);
+      }
+    }
+    type();
+    // Stagger creds
+    document.querySelectorAll('#creds .cred').forEach((c, i) => {
+      setTimeout(() => c.classList.add('visible'), 600 + i * 100);
+    });
+    aboutObs.disconnect();
+  }
+}, { threshold: 0.4 });
+aboutObs.observe(document.getElementById('about'));
+
+// ── PARALLAX ──
+function doParallax() {
+  // Disabled — image is full natural height, parallax would clip it
+}
+
+// ── DARK MODE ──
+const darkToggle = document.getElementById('dark-toggle');
+const storedDark = localStorage.getItem('thryve-dark');
+if (storedDark === '1') document.body.classList.add('dark');
+darkToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  localStorage.setItem('thryve-dark', document.body.classList.contains('dark') ? '1' : '0');
+});
+
+// ── BUTTON RIPPLE ──
+document.querySelectorAll('.btn-p, .btn-d, .btn-w, .hcta-btn, .nav-cta').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const r = document.createElement('span');
+    r.className = 'btn-ripple';
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 2;
+    r.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + (e.clientX - rect.left - size/2) + 'px;top:' + (e.clientY - rect.top - size/2) + 'px;';
+    this.appendChild(r);
+    setTimeout(() => r.remove(), 600);
+  });
+});
+</script>
+
+<!-- Tweaks panel (loaded last so DOM exists) -->
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks-thryve.jsx"></script>
+</body>
+</html>

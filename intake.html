@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>New Patient Intake — Thryve Health & Wellness</title>
+<meta name="description" content="Complete your new patient intake form for Thryve Health & Wellness.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--dk:#1e3d28;--mg:#2c5f3e;--ac:#1D9E75;--lt:#5DCAA5;--pl:#9FE1CB;--cm:#eef5ee;--cl:#f9fbf9;--tm:#4a6a52;--mu:#7a9a82;--bd:#c8e0c8;--wh:#ffffff;--ease-out-expo:cubic-bezier(0.16,1,0.3,1)}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cl);color:var(--dk);font-weight:300;line-height:1.75;font-size:16px;overflow-x:hidden}
+#page-veil{position:fixed;inset:0;background:var(--cl);z-index:9999;pointer-events:none;opacity:0;transition:opacity .35s ease}
+#page-veil.visible{opacity:1;pointer-events:all}
+
+nav{background:rgba(14,31,20,0.3);backdrop-filter:blur(4px);border-bottom:1px solid rgba(255,255,255,.08);padding:0 60px;display:flex;align-items:center;justify-content:space-between;height:80px;position:sticky;top:0;z-index:100;transition:background .4s,border-color .4s,box-shadow .4s}
+nav.scrolled{background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom-color:var(--bd);box-shadow:0 2px 20px rgba(30,61,40,.06)}
+.nav-logo{text-decoration:none;display:flex;align-items:center}.nav-logo img{height:81px;width:auto}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13px;letter-spacing:2px;color:rgba(255,255,255,.9);text-decoration:none;text-transform:uppercase;transition:color .2s;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.nav-links a:hover{color:var(--lt)}
+nav.scrolled .nav-links a{color:var(--tm);text-shadow:none}
+nav.scrolled .nav-links a:hover{color:var(--mg)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-cta{background:var(--ac);color:var(--wh);border:none;padding:12px 24px;border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;font-weight:500;transition:background .25s,transform .15s}.nav-cta:hover{background:var(--mg);transform:translateY(-1px)}
+.dark-toggle{width:36px;height:20px;background:rgba(255,255,255,.2);border-radius:10px;border:none;cursor:pointer;position:relative;transition:background .3s;flex-shrink:0}
+.dark-toggle::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--wh);transition:transform .3s}
+body.dark .dark-toggle{background:var(--mg)}
+body.dark .dark-toggle::after{transform:translateX(16px);background:var(--lt)}
+nav.scrolled .dark-toggle{background:var(--bd)}
+
+body.dark{background:#0e1f14;color:#d4e8da}
+body.dark nav.scrolled{background:rgba(14,31,20,.96);border-color:#1e3d28}
+body.dark .intake-card{background:#152b1d;border-color:#1e3d28}
+body.dark .form-field input,body.dark .form-field select,body.dark .form-field textarea{background:#152b1d;border-color:#1e3d28;color:#d4e8da}
+body.dark .section-title{color:#d4e8da}
+body.dark footer{background:#071009}
+
+/* PAGE HERO */
+.page-hero{background:linear-gradient(135deg,#1e3d28 0%,#2c5f3e 100%);padding:70px 60px;text-align:center;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(29,158,117,.1) 0%,transparent 60%);pointer-events:none}
+.page-hero h1{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--wh);margin-bottom:12px;position:relative;z-index:1}
+.page-hero h1 em{font-style:italic;color:var(--lt)}
+.page-hero p{font-size:16px;color:rgba(255,255,255,.6);max-width:520px;margin:0 auto;font-weight:300;position:relative;z-index:1}
+
+/* PROGRESS */
+.intake-progress{background:var(--wh);border-bottom:1px solid var(--bd);padding:20px 60px;position:sticky;top:80px;z-index:90;transition:box-shadow .2s}
+body.dark .intake-progress{background:#0e1f14;border-color:#1e3d28}
+.ip-steps{display:flex;align-items:center;max-width:700px;margin:0 auto;gap:0}
+.ip-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
+.ip-step:not(:last-child)::after{content:'';position:absolute;top:14px;left:calc(50% + 14px);right:calc(-50% + 14px);height:1px;background:var(--bd)}
+.ip-step.done::after{background:var(--ac)}
+.ip-circle{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--bd);background:var(--wh);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--mu);transition:all .3s;position:relative;z-index:1}
+.ip-step.active .ip-circle{border-color:var(--ac);background:var(--ac);color:var(--wh);box-shadow:0 0 0 3px rgba(29,158,117,.12)}
+.ip-step.done .ip-circle{border-color:rgba(29,158,117,.4);background:rgba(29,158,117,.08);color:var(--ac)}
+.ip-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);text-align:center;white-space:nowrap}
+.ip-step.active .ip-label{color:var(--ac)}
+body.dark .ip-circle{background:#152b1d;border-color:#1e3d28}
+
+/* INTAKE LAYOUT */
+.intake-sec{background:var(--cm);padding:60px;min-height:60vh}
+body.dark .intake-sec{background:#0d1a10}
+.intake-layout{max-width:760px;margin:0 auto}
+.intake-card{background:var(--wh);border:1px solid var(--bd);border-radius:14px;padding:40px;margin-bottom:24px;transition:box-shadow .2s}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--dk);margin-bottom:6px}
+.section-sub{font-size:13px;color:var(--mu);margin-bottom:24px;font-weight:300}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.form-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.form-field.full{grid-column:1/-1}
+.form-field label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);font-weight:500}
+.form-field input,.form-field select,.form-field textarea{font-family:'Jost',sans-serif;font-size:14px;font-weight:300;color:var(--dk);background:var(--cl);border:1px solid var(--bd);border-radius:4px;padding:12px 14px;transition:border-color .25s,box-shadow .25s;outline:none;width:100%;resize:vertical}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(29,158,117,.1);background:var(--wh)}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.cb-item{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--tm);cursor:pointer;padding:8px 14px;background:var(--cl);border:1px solid var(--bd);border-radius:6px;transition:border-color .2s,background .2s;user-select:none}
+body.dark .cb-item{background:#1a3322;border-color:#1e3d28;color:#7a9a82}
+.cb-item:hover{border-color:rgba(29,158,117,.4);background:var(--cm)}
+.cb-item input[type=checkbox]{accent-color:var(--ac);width:14px;height:14px}
+.cb-item input[type=checkbox]:checked + span{color:var(--mg);font-weight:500}
+.form-note{font-size:13px;color:var(--mu);font-style:italic;border-left:2px solid var(--lt);padding-left:12px;margin-bottom:20px;line-height:1.65}
+.radio-group{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.radio-item{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--tm);cursor:pointer;padding:8px 14px;background:var(--cl);border:1px solid var(--bd);border-radius:6px;transition:border-color .2s,background .2s;user-select:none}
+body.dark .radio-item{background:#1a3322;border-color:#1e3d28;color:#7a9a82}
+.radio-item:hover{border-color:rgba(29,158,117,.4);background:var(--cm)}
+.radio-item input[type=radio]{accent-color:var(--ac);width:14px;height:14px}
+
+/* NAV BUTTONS */
+.intake-nav{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.btn-back{background:transparent;border:1px solid var(--bd);color:var(--tm);padding:13px 28px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s}
+.btn-back:hover{border-color:var(--mg);color:var(--mg)}
+.btn-next{background:var(--ac);color:var(--wh);border:none;padding:14px 36px;border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-weight:500;transition:background .25s,transform .15s,box-shadow .25s}
+.btn-next:hover{background:var(--mg);transform:translateY(-1px);box-shadow:0 6px 20px rgba(29,158,117,.3)}
+.step-count{font-size:12px;color:var(--mu);letter-spacing:1px}
+
+/* SUCCESS */
+.intake-success{display:none;text-align:center;padding:80px 40px}
+.intake-success.visible{display:block}
+.success-icon{width:64px;height:64px;background:rgba(29,158,117,.1);border:1px solid rgba(29,158,117,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--mg);margin-bottom:10px}
+.success-text{font-size:15px;color:var(--tm);line-height:1.85;max-width:440px;margin:0 auto 28px}
+
+footer{background:#152b1d;padding:36px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.f-logo img{height:38px;width:auto;opacity:.65}.f-links{display:flex;gap:22px;list-style:none}.f-links a{font-size:12px;color:#3a6048;text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s}.f-links a:hover{color:var(--mu)}.f-copy{font-size:11px;color:#2a4a32;letter-spacing:1px}
+
+@media(max-width:860px){nav{padding:0 20px}.nav-links{display:none}.intake-sec{padding:40px 24px}.intake-progress{padding:16px 24px;top:72px}.intake-card{padding:28px 20px}.form-row,.form-row-3{grid-template-columns:1fr}footer{padding:24px;flex-direction:column;text-align:center}.page-hero{padding:56px 24px}.page-hero h1{font-size:36px}}
+</style>
+</head>
+<body>
+<div id="page-veil"></div>
+<nav id="main-nav">
+  <a href="index.html" class="nav-logo"><img src="assets/logo-nav.png" alt="Thryve Health"></a>
+  <ul class="nav-links">
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode"></button>
+    <a href="book.html" class="nav-cta">Book a consult</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <h1>New patient <em>intake</em></h1>
+  <p>Takes about 10 minutes. Complete this before your first visit so we arrive fully prepared.</p>
+</section>
+
+<!-- Progress bar -->
+<div class="intake-progress" id="intake-progress">
+  <div class="ip-steps">
+    <div class="ip-step active" id="ps0"><div class="ip-circle">1</div><div class="ip-label">About you</div></div>
+    <div class="ip-step" id="ps1"><div class="ip-circle">2</div><div class="ip-label">Health history</div></div>
+    <div class="ip-step" id="ps2"><div class="ip-circle">3</div><div class="ip-label">Symptoms</div></div>
+    <div class="ip-step" id="ps3"><div class="ip-circle">4</div><div class="ip-label">Goals</div></div>
+    <div class="ip-step" id="ps4"><div class="ip-circle">5</div><div class="ip-label">Review</div></div>
+  </div>
+</div>
+
+<section class="intake-sec">
+  <div class="intake-layout">
+
+    <!-- STEP 1: About you -->
+    <div class="intake-step" id="step-1">
+      <div class="intake-card">
+        <div class="section-title">About you</div>
+        <div class="section-sub">Basic information to set up your chart.</div>
+        <div class="form-row">
+          <div class="form-field"><label>First name *</label><input type="text" placeholder="First" required></div>
+          <div class="form-field"><label>Last name *</label><input type="text" placeholder="Last" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>Date of birth *</label><input type="date" required></div>
+          <div class="form-field"><label>State of residence *</label>
+            <select required><option value="">Select</option><option value="AZ">Arizona</option><option value="NM">New Mexico</option><option value="ND">North Dakota</option></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>Email address *</label><input type="email" placeholder="you@email.com" required></div>
+          <div class="form-field"><label>Phone number</label><input type="tel" placeholder="(555) 000-0000"></div>
+        </div>
+        <div class="form-field"><label>How did you hear about us?</label>
+          <select><option value="">Select</option><option>Google / search</option><option>Instagram</option><option>Facebook</option><option>Friend or family referral</option><option>Doctor referral</option><option>Podcast</option><option>Other</option></select>
+        </div>
+      </div>
+      <div class="intake-nav">
+        <span class="step-count">Step 1 of 5</span>
+        <button class="btn-next" onclick="nextStep(1)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Health history -->
+    <div class="intake-step" id="step-2" style="display:none">
+      <div class="intake-card">
+        <div class="section-title">Health history</div>
+        <div class="section-sub">Help us understand your medical background.</div>
+        <div class="form-field">
+          <label>Current medications (include doses if known)</label>
+          <textarea rows="3" placeholder="List any medications, supplements, or hormones you're currently taking..."></textarea>
+        </div>
+        <div class="form-field">
+          <label>Known allergies</label>
+          <input type="text" placeholder="Medications, foods, environmental...">
+        </div>
+        <div class="form-field">
+          <label>Significant medical history</label>
+          <textarea rows="3" placeholder="Previous diagnoses, surgeries, hospitalizations..."></textarea>
+        </div>
+        <div class="form-field">
+          <label>Family history (relevant conditions)</label>
+          <textarea rows="2" placeholder="Cancer, heart disease, diabetes, thyroid conditions, early menopause..."></textarea>
+        </div>
+        <div class="form-field">
+          <label>Do you have recent lab work to share?</label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="labs" value="yes"><span>Yes — I'll upload or bring them</span></label>
+            <label class="radio-item"><input type="radio" name="labs" value="no"><span>No recent labs</span></label>
+            <label class="radio-item"><input type="radio" name="labs" value="unsure"><span>Not sure</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="intake-nav">
+        <button class="btn-back" onclick="prevStep(2)">← Back</button>
+        <span class="step-count">Step 2 of 5</span>
+        <button class="btn-next" onclick="nextStep(2)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Symptoms -->
+    <div class="intake-step" id="step-3" style="display:none">
+      <div class="intake-card">
+        <div class="section-title">Current symptoms</div>
+        <div class="section-sub">Check everything that applies. We'll go deeper in your visit.</div>
+        <div class="form-field">
+          <label>Select all symptoms you're experiencing</label>
+          <div class="checkbox-group">
+            <label class="cb-item"><input type="checkbox"><span>Fatigue / low energy</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Poor sleep / insomnia</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Night sweats</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Hot flashes</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Weight gain</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Difficulty losing weight</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Brain fog / poor concentration</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Memory issues</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Mood swings</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Anxiety</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Depression</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Low libido</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Vaginal dryness</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Irregular periods</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Hair thinning / loss</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Skin changes</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Joint pain</span></label>
+            <label class="cb-item"><input type="checkbox"><span>Heart palpitations</span></label>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>How long have you been experiencing these symptoms?</label>
+          <select>
+            <option value="">Select</option>
+            <option>Less than 6 months</option>
+            <option>6–12 months</option>
+            <option>1–2 years</option>
+            <option>2–5 years</option>
+            <option>More than 5 years</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Anything else you'd like us to know about your symptoms?</label>
+          <textarea rows="3" placeholder="Additional context, patterns, triggers..."></textarea>
+        </div>
+      </div>
+      <div class="intake-nav">
+        <button class="btn-back" onclick="prevStep(3)">← Back</button>
+        <span class="step-count">Step 3 of 5</span>
+        <button class="btn-next" onclick="nextStep(3)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Goals -->
+    <div class="intake-step" id="step-4" style="display:none">
+      <div class="intake-card">
+        <div class="section-title">Your goals</div>
+        <div class="section-sub">What would you most like to achieve through this care?</div>
+        <div class="form-field">
+          <label>Primary reason for seeking care</label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="goal" value="hrt"><span>Hormone balance / perimenopause</span></label>
+            <label class="radio-item"><input type="radio" name="goal" value="weight"><span>Weight loss support</span></label>
+            <label class="radio-item"><input type="radio" name="goal" value="both"><span>Both hormones and weight</span></label>
+            <label class="radio-item"><input type="radio" name="goal" value="general"><span>General wellness optimization</span></label>
+            <label class="radio-item"><input type="radio" name="goal" value="unsure"><span>Not sure — need guidance</span></label>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>What does success look like for you?</label>
+          <textarea rows="4" placeholder="Describe what you hope to feel, achieve, or change in the next 6–12 months..."></textarea>
+        </div>
+        <div class="form-field">
+          <label>Have you tried any treatments before for these concerns?</label>
+          <textarea rows="3" placeholder="Previous medications, diets, programs, providers..."></textarea>
+        </div>
+        <div class="form-field">
+          <label>Anything you want us to know before your first visit?</label>
+          <textarea rows="3" placeholder="Questions, concerns, things that weren't covered above..."></textarea>
+        </div>
+      </div>
+      <div class="intake-nav">
+        <button class="btn-back" onclick="prevStep(4)">← Back</button>
+        <span class="step-count">Step 4 of 5</span>
+        <button class="btn-next" onclick="nextStep(4)">Review →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Review + submit -->
+    <div class="intake-step" id="step-5" style="display:none">
+      <div class="intake-card">
+        <div class="section-title">Review &amp; submit</div>
+        <div class="section-sub">Almost done. A couple of acknowledgements before we send this through.</div>
+        <div class="form-note" style="margin-bottom:24px;">By submitting this form, you confirm that the information provided is accurate to the best of your knowledge. This is not a substitute for clinical evaluation.</div>
+        <div class="form-field">
+          <label class="cb-item" style="width:100%;border-radius:8px;padding:14px 16px;">
+            <input type="checkbox" id="consent-hipaa" required>
+            <span>I understand that my information will be stored and used in accordance with HIPAA privacy standards and Thryve's privacy practices.</span>
+          </label>
+        </div>
+        <div class="form-field">
+          <label class="cb-item" style="width:100%;border-radius:8px;padding:14px 16px;">
+            <input type="checkbox" id="consent-telehealth" required>
+            <span>I consent to receiving telehealth services from Thryve Health &amp; Wellness via secure video or phone visit.</span>
+          </label>
+        </div>
+        <div class="form-field">
+          <label class="cb-item" style="width:100%;border-radius:8px;padding:14px 16px;">
+            <input type="checkbox" id="consent-portal" required>
+            <span>I understand that all clinical communication will take place through the secure patient portal — not email, text, or social media.</span>
+          </label>
+        </div>
+        <div class="form-field" style="margin-top:8px;">
+          <label>Digital signature (type your full name)</label>
+          <input type="text" placeholder="Full legal name">
+        </div>
+        <div class="form-field">
+          <label>Today's date</label>
+          <input type="date" id="sig-date">
+        </div>
+      </div>
+      <div class="intake-nav">
+        <button class="btn-back" onclick="prevStep(5)">← Back</button>
+        <span class="step-count">Step 5 of 5</span>
+        <button class="btn-next" onclick="submitIntake()" style="background:var(--mg);">Submit intake ✓</button>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="intake-success" id="intake-success">
+      <div class="intake-card" style="text-align:center;padding:60px 40px;">
+        <div class="success-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#1D9E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="success-title">Intake received</div>
+        <div class="success-text">Thank you — your intake form has been submitted securely. We'll review it before your visit so we can make the most of your time together.</div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <a href="book.html" class="btn-next" style="text-decoration:none;display:inline-block;padding:14px 28px;">Book your consult →</a>
+          <a href="portal.html" class="btn-back" style="text-decoration:none;display:inline-flex;align-items:center;padding:14px 28px;">Patient portal</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo"><a href="index.html"><img src="assets/logo-footer.png" alt="Thryve"></a></div>
+  <ul class="f-links">
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="book.html">Book</a></li>
+  </ul>
+  <div class="f-copy">© 2026 Thryve Health &amp; Wellness · Secure · HIPAA-compliant</div>
+</footer>
+
+<script>
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a[href]');
+  if (!a) return;
+  const href = a.getAttribute('href');
+  if (!href || href.startsWith('#') || href.startsWith('http')) return;
+  e.preventDefault();
+  document.getElementById('page-veil').classList.add('visible');
+  setTimeout(() => { window.location.href = href; }, 320);
+});
+const nav = document.getElementById('main-nav');
+function handleScroll() { nav.classList.toggle('scrolled', window.scrollY > 20); }
+window.addEventListener('scroll', handleScroll, {passive:true});
+handleScroll();
+const dt = document.getElementById('dark-toggle');
+if (localStorage.getItem('thryve-dark') === '1') document.body.classList.add('dark');
+dt.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  localStorage.setItem('thryve-dark', document.body.classList.contains('dark') ? '1' : '0');
+});
+
+// Set today's date
+const sigDate = document.getElementById('sig-date');
+if (sigDate) sigDate.valueAsDate = new Date();
+
+let currentStep = 1;
+
+function nextStep(from) {
+  document.getElementById('step-' + from).style.display = 'none';
+  currentStep = from + 1;
+  document.getElementById('step-' + currentStep).style.display = 'block';
+  updateProgress(currentStep - 1);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function prevStep(from) {
+  document.getElementById('step-' + from).style.display = 'none';
+  currentStep = from - 1;
+  document.getElementById('step-' + currentStep).style.display = 'block';
+  updateProgress(currentStep - 1);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function updateProgress(activeIdx) {
+  for (let i = 0; i < 5; i++) {
+    const el = document.getElementById('ps' + i);
+    el.classList.remove('active', 'done');
+    if (i < activeIdx) {
+      el.classList.add('done');
+      el.querySelector('.ip-circle').innerHTML = '✓';
+    } else if (i === activeIdx) {
+      el.classList.add('active');
+      el.querySelector('.ip-circle').innerHTML = (i + 1);
+    } else {
+      el.querySelector('.ip-circle').innerHTML = (i + 1);
+    }
+  }
+}
+
+function submitIntake() {
+  document.getElementById('step-5').style.display = 'none';
+  document.getElementById('intake-success').classList.add('visible');
+  updateProgress(5);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>
