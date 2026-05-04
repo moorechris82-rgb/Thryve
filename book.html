@@ -14,9 +14,9 @@ html{scroll-behavior:smooth}
 body{font-family:'Jost',sans-serif;background:var(--cl);color:var(--dk);font-weight:300;line-height:1.75;font-size:16px;overflow-x:hidden}
 #page-veil{position:fixed;inset:0;background:var(--cl);z-index:9999;pointer-events:none;opacity:0;transition:opacity .35s ease}
 #page-veil.visible{opacity:1;pointer-events:all}
-nav{background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);padding:0 60px;display:flex;align-items:center;justify-content:space-between;height:72px;position:sticky;top:0;z-index:100;transition:box-shadow .3s}
+nav{background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);padding:0 60px;display:flex;align-items:center;justify-content:space-between;height:86px;position:sticky;top:0;z-index:100;transition:box-shadow .3s}
 nav.scrolled{box-shadow:0 2px 20px rgba(30,61,40,.06)}
-.nav-logo{text-decoration:none;display:flex;align-items:center}.nav-logo img{height:54px;width:auto}
+.nav-logo{text-decoration:none;display:flex;align-items:center}.nav-logo img{height:52px;width:auto}
 .nav-links{display:flex;gap:28px;list-style:none}.nav-links a{font-size:13px;letter-spacing:2px;color:var(--tm);text-decoration:none;text-transform:uppercase;transition:color .2s}.nav-links a:hover,.nav-links a.active{color:var(--mg)}
 .nav-right{display:flex;align-items:center;gap:16px}
 .nav-cta{background:var(--ac);color:var(--wh);border:none;padding:12px 24px;border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;font-weight:500;transition:background .25s,box-shadow .25s,transform .15s}.nav-cta:hover{background:var(--mg);box-shadow:0 4px 16px rgba(29,158,117,.3);transform:translateY(-1px)}
@@ -89,6 +89,25 @@ body.dark .om-title{color:#d4e8da}
 .om-step::before{content:'→';position:absolute;left:0;color:var(--ac)}
 .om-foot{font-size:12px;color:var(--mu);font-style:italic}
 
+/* ── Existing patient portal card ── */
+.portal-band{background:var(--wh);border-top:1px solid var(--bd);padding:56px 60px}
+body.dark .portal-band{background:#0e1f14;border-color:#1e3d28}
+.portal-band-inner{max-width:1020px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
+.portal-band-tag{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ac);font-weight:500;margin-bottom:10px;display:block}
+.portal-band-h{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:var(--dk);margin-bottom:8px;line-height:1.2}
+body.dark .portal-band-h{color:#d4e8da}
+.portal-band-p{font-size:14px;color:var(--tm);line-height:1.75;font-weight:300;max-width:520px}
+body.dark .portal-band-p{color:#7a9a82}
+.portal-band-actions{display:flex;flex-direction:column;gap:12px;align-items:flex-end;flex-shrink:0}
+.portal-login-btn{display:inline-flex;align-items:center;gap:10px;background:var(--dk);color:var(--wh);text-decoration:none;padding:14px 28px;border-radius:6px;font-size:13px;font-weight:500;transition:background .2s,transform .15s,box-shadow .2s;white-space:nowrap;box-shadow:0 2px 8px rgba(30,61,40,.18)}
+.portal-login-btn:hover{background:var(--mg);transform:translateY(-1px);box-shadow:0 4px 14px rgba(30,61,40,.25)}
+.portal-login-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;flex-shrink:0}
+.portal-login-note{font-size:11px;color:var(--mu);text-align:right;letter-spacing:.2px}
+.portal-features{display:flex;gap:24px;flex-wrap:wrap;margin-top:16px}
+.portal-feat{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--mu)}
+.portal-feat svg{width:14px;height:14px;stroke:var(--ac);fill:none;stroke-width:1.8;flex-shrink:0}
+@media(max-width:860px){.portal-band{padding:40px 20px}.portal-band-inner{grid-template-columns:1fr;gap:24px}.portal-band-actions{align-items:flex-start}.portal-login-note{text-align:left}}
+
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease-out-expo),transform .7s var(--ease-out-expo)}
 .reveal.visible{opacity:1;transform:none}
 
@@ -107,7 +126,7 @@ body.dark .om-title{color:#d4e8da}
   </ul>
   <div class="nav-right">
     <button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode"></button>
-    <a href="portal.html" style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.6);text-decoration:none;padding:8px 14px;border:1px solid rgba(255,255,255,.15);border-radius:3px;transition:color .2s,border-color .2s;white-space:nowrap">Patient portal</a>
+    <a href="https://www.optimantra.com/optimus/patient/patientaccess/prospects?pid=WlloNEVHeFgzVGxGNUF6cFczNnJ0dz09" target="_blank" rel="noopener" style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--tm);text-decoration:none;padding:8px 14px;border:1px solid var(--bd);border-radius:3px;transition:color .2s,border-color .2s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Patient login</a>
     <a href="book.html" class="nav-cta">Book a consult</a>
   </div>
 </nav>
@@ -210,6 +229,42 @@ body.dark .om-title{color:#d4e8da}
     </div>
   </div>
 </section>
+
+<!-- EXISTING PATIENT PORTAL BAND -->
+<div class="portal-band">
+  <div class="portal-band-inner">
+    <div>
+      <span class="portal-band-tag">Already a patient?</span>
+      <h2 class="portal-band-h">Log in to your patient portal</h2>
+      <p class="portal-band-p">View your labs, message Mika, request refills, review your care plan, and manage your account — all from one secure place.</p>
+      <div class="portal-features">
+        <div class="portal-feat">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Lab results
+        </div>
+        <div class="portal-feat">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          Message Mika
+        </div>
+        <div class="portal-feat">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          Refill requests
+        </div>
+        <div class="portal-feat">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+          Billing
+        </div>
+      </div>
+    </div>
+    <div class="portal-band-actions">
+      <a href="https://www.optimantra.com/optimus/patient/patientaccess/prospects?pid=WlloNEVHeFgzVGxGNUF6cFczNnJ0dz09" target="_blank" rel="noopener" class="portal-login-btn">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+        Log in to portal
+      </a>
+      <span class="portal-login-note">Opens securely in a new tab · HIPAA-compliant</span>
+    </div>
+  </div>
+</div>
 
 <footer>
   <div class="f-logo"><a href="index.html"><img src="assets/logo-footer.png" alt="Thryve"></a></div>
